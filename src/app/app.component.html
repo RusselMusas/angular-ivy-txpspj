@@ -1,7 +1,36 @@
-<h1>Angular</h1>
-<h2>3 Authors</h2>
-<div>
-  <ul>
-    <li *ngFor="let author of authors; index as i">{{i + ' - ' + author}}</li>
-  </ul>
+<section class="container-fluid">
+<h1>Angular Forms</h1>
+<h2>Form sample</h2>
+<div class="row">
+  <div class="col-md m-2">
+    <form #f="ngForm" (ngSubmit)="submitForm(f)" autocomplete="off">
+      <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" id="nom" class="form-control form-control-sm" #nom="ngModel" ngModel required>
+      </div>
+      <div class="form-group">
+        <label for="telephone">Telephone</label>
+        <input type="tel" name="telephone" id="telephone" pattern="^[+]243[0-9]{9}" class="form-control form-control-sm" #telephone="ngModel" ngModel required>
+        <div [hidden]="telephone.valid || telephone.pristine" class="text-danger">
+          <small *ngIf="telephone.errors?.pattern">Phone number invalid</small>
+          <small *ngIf="telephone.errors?.required">Phone number is required</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" class="form-control form-control-sm" #email="ngModel" ngModel required>
+        <div [hidden]="email.valid || email.pristine" class="text-danger">
+          <small *ngIf="email.errors?.pattern">Email invalid</small>
+          <small *ngIf="email.errors?.required">Email is required</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-sm" [disabled]="f.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
 </div>
+<div class="ml-2">
+  <pre>{{ f.value | json }}</pre>
+</div>
+</section>
